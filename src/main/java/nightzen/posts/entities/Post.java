@@ -1,5 +1,7 @@
 package nightzen.posts.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +14,9 @@ public class Post {
     private Long id;
     private String title;
     private String text;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date createdAt;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date updatedAt;
 
     public Post() {
