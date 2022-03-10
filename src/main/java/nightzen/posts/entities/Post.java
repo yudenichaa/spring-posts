@@ -5,18 +5,23 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Entity
 public class Post {
+
+    static final String dateFormat = "dd-MM-yyyy";
+
     @Id
     @GeneratedValue
     private Long id;
     private String title;
     private String text;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = Post.dateFormat)
     private Date createdAt;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = Post.dateFormat)
     private Date updatedAt;
 
     public Post() {
@@ -69,12 +74,22 @@ public class Post {
         this.createdAt = createdAt;
     }
 
+    public void setCreatedAt(String createdAt) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Post.dateFormat);
+        this.createdAt = dateFormat.parse(createdAt);
+    }
+
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Post.dateFormat);
+        this.createdAt = dateFormat.parse(updatedAt);
     }
 
     @Override
