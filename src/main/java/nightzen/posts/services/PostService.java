@@ -49,14 +49,11 @@ public class PostService {
         BeanWrapper postWrapper = new BeanWrapperImpl(post);
         postWrapper.setPropertyValues(partialPost);
         return postRepository.save(post);
+    }
 
-//        partialPost.forEach((property, value) -> {
-//            Field field = ReflectionUtils.findField(Post.class, property);
-//            if (field != null) {
-//                ReflectionUtils.makeAccessible(field);
-//                ReflectionUtils.setField(field, post, value);
-//            }
-//        });
-//        return postRepository.save(post);
+    public void updateTitle(Long id, String title) {
+        postRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find post with id " + id));
+        postRepository.updateTitle(id, title);
     }
 }
