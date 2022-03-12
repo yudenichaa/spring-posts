@@ -1,26 +1,35 @@
 package nightzen.posts.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class Post {
-
     static final String dateFormat = "dd-MM-yyyy";
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotEmpty(message = "'Title' is a required field")
     private String title;
+
+    @NotEmpty(message = "'Text' is a required field")
     private String text;
+
+    @NotNull
     @JsonFormat(pattern = Post.dateFormat)
     private Date createdAt;
+
+    @NotNull
     @JsonFormat(pattern = Post.dateFormat)
     private Date updatedAt;
 
@@ -74,22 +83,12 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public void setCreatedAt(String createdAt) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Post.dateFormat);
-        this.createdAt = dateFormat.parse(createdAt);
-    }
-
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Post.dateFormat);
-        this.createdAt = dateFormat.parse(updatedAt);
     }
 
     @Override

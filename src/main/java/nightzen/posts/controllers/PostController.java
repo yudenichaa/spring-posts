@@ -2,11 +2,10 @@ package nightzen.posts.controllers;
 
 import nightzen.posts.entities.Post;
 import nightzen.posts.services.PostService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +13,6 @@ import java.util.Map;
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public PostController(@Autowired PostService postService) {
         this.postService = postService;
@@ -32,12 +29,12 @@ public class PostController {
     }
 
     @PostMapping
-    public Post addPost(@RequestBody Post post) {
+    public Post addPost(@Valid @RequestBody Post post) {
         return postService.addPost(post);
     }
 
     @PutMapping("/{id}")
-    public Post updatePost(@PathVariable Long id, @RequestBody Post post) {
+    public Post updatePost(@PathVariable Long id, @Valid @RequestBody Post post) {
         return postService.updatePost(id, post);
     }
 
@@ -47,8 +44,13 @@ public class PostController {
     }
 
     @PatchMapping("/{id}/title")
-    public void updateTitle(@PathVariable Long id, @RequestBody String title) {
+    public void updatePostTitle(@PathVariable Long id, @RequestBody String title) {
         postService.updateTitle(id, title);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePost(@PathVariable Long id) {
+        postService.deletePlayer(id);
     }
 }
 
