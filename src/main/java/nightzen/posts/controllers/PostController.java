@@ -50,7 +50,7 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
-        postService.deletePlayer(id);
+        postService.deletePost(id);
     }
 }
 

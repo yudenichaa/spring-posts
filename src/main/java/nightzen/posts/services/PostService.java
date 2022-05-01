@@ -65,7 +65,7 @@ public class PostService {
         postRepository.updateTitle(id, title);
     }
 
-    public void deletePlayer(Long id) {
+    public void deletePost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new PostNotFoundException("Unable to find post with id " + id));
         postRepository.delete(post);
